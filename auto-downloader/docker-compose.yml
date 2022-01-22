@@ -1,0 +1,103 @@
+version: "2.1"
+
+services:
+  qbittorrent:
+    # Torrent Client, more info at https://github.com/linuxserver/docker-qbittorrent
+    container_name: qbittorrent
+    image: ghcr.io/linuxserver/qbittorrent
+    restart: unless-stopped
+    networks:
+      - auto-downloads-network
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=7171
+    volumes:
+      - ${CONFIG_DIR}/qbittorrent:/config
+      - ${DOWNLOAD_DIR}:/downloads
+    ports:
+      # out : in 
+      - 6100:6881
+      - 6100:6881/udp
+      - 6000:7171
+
+  jackett:
+    # Torrent tracker manager for Sonarr, Radarr
+    # more info at https://github.com/linuxserver/docker-jackett
+    container_name: jackett
+    image: linuxserver/jackett:latest
+    restart: unless-stopped
+    networks:
+      - auto-downloads-network
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOWNLOAD_DIR}/torrent-blackhole:/downloads
+      - ${CONFIG_DIR}/jackett:/config
+    ports:
+      - 7000:9117
+
+  sonarr:
+    # Monitor tv shows, automatically download, sort and rename episode files
+    # more info at https://github.com/linuxserver/docker-sonarr
+    container_name: sonarr
+    image: linuxserver/sonarr:latest
+    restart: unless-stopped
+    networks:
+      - auto-downloads-network
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_DIR}/sonarr:/config
+      - ${MEDIA_DIR}/tv:/tv
+      - ${DOWNLOAD_DIR}:/downloads
+    depends_on:
+      - qbittorrent
+      - jackett
+    ports:
+      - 8000:8989
+
+  radarr:
+    # Movie collection manager, automatically download movies, re-download if better quality is found
+    # more info at https://github.com/linuxserver/docker-radarr
+    container_name: radarr
+    image: linuxserver/radarr:latest
+    restart: unless-stopped
+    networks:
+      - auto-downloads-network
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_DIR}/radarr:/config
+      - ${MEDIA_DIR}/films:/movies
+      - ${DOWNLOAD_DIR}:/downloads
+    depends_on:
+      - qbittorrent
+      - jackett
+    ports:
+      - 9000:7878
+
+
+
+networks:
+    auto-downloads-network:
+        # use the bridge driver, but enable IPv6
+        driver: bridge
+        
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.20.20.0/24
+                  gateway: 172.20.20.1
+    
+
+
+  
+    
