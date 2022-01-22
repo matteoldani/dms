@@ -6,8 +6,6 @@ services:
     container_name: qbittorrent
     image: ghcr.io/linuxserver/qbittorrent
     restart: unless-stopped
-    networks:
-      - auto-downloader-network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -28,8 +26,6 @@ services:
     container_name: jackett
     image: linuxserver/jackett:latest
     restart: unless-stopped
-    networks:
-      - auto-downloader-network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -46,8 +42,6 @@ services:
     container_name: sonarr
     image: linuxserver/sonarr:latest
     restart: unless-stopped
-    networks:
-      - auto-downloader-network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -68,8 +62,6 @@ services:
     container_name: radarr
     image: linuxserver/radarr:latest
     restart: unless-stopped
-    networks:
-      - auto-downloader-network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -85,17 +77,6 @@ services:
       - 9000:7878
 
 
-
-networks:
-    auto-downloader-network:
-        # use the bridge driver, but enable IPv6
-        driver: bridge
-        
-        ipam:
-            driver: default
-            config:
-                - subnet: 172.20.20.0/24
-                  gateway: 172.20.20.1
     
 
 
