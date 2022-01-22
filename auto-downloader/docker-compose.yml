@@ -7,7 +7,7 @@ services:
     image: ghcr.io/linuxserver/qbittorrent
     restart: unless-stopped
     networks:
-      - auto-downloads-network
+      - auto-downloader-network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -29,7 +29,7 @@ services:
     image: linuxserver/jackett:latest
     restart: unless-stopped
     networks:
-      - auto-downloads-network
+      - auto-downloader-network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -47,7 +47,7 @@ services:
     image: linuxserver/sonarr:latest
     restart: unless-stopped
     networks:
-      - auto-downloads-network
+      - auto-downloader-network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -69,7 +69,7 @@ services:
     image: linuxserver/radarr:latest
     restart: unless-stopped
     networks:
-      - auto-downloads-network
+      - auto-downloader-network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
