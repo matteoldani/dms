@@ -6,7 +6,7 @@ services:
     container_name: qbittorrent
     image: ghcr.io/linuxserver/qbittorrent
     restart: unless-stopped
-    network-mode: host
+    network_mode: host
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -27,7 +27,7 @@ services:
     container_name: jackett
     image: linuxserver/jackett:latest
     restart: unless-stopped
-    network-mode: host
+    network_mode: host
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -44,7 +44,7 @@ services:
     container_name: sonarr
     image: linuxserver/sonarr:latest
     restart: unless-stopped
-    network-mode: host
+    network_mode: host
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -65,7 +65,7 @@ services:
     container_name: radarr
     image: linuxserver/radarr:latest
     restart: unless-stopped
-    network-mode: host
+    network_mode: host
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
