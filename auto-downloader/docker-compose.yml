@@ -17,9 +17,9 @@ services:
       - ${DOWNLOAD_DIR}:/downloads
     ports:
       # out : in 
-      - 7001:6881
-      - 7001:6881/udp
-      - 7000:7171
+      - 6881:6881
+      - 6881:6881/udp
+      - 7171:7171
 
   jackett:
     # Torrent tracker manager for Sonarr, Radarr
