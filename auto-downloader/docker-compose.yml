@@ -17,9 +17,9 @@ services:
       - ${DOWNLOAD_DIR}:/downloads
     ports:
       # out : in 
-      - 6100:6881
-      - 6100:6881/udp
-      - 6000:7171
+      - 7001:6881
+      - 7001:6881/udp
+      - 7000:7171
 
   jackett:
     # Torrent tracker manager for Sonarr, Radarr
@@ -36,7 +36,7 @@ services:
       - ${DOWNLOAD_DIR}/torrent-blackhole:/downloads
       - ${CONFIG_DIR}/jackett:/config
     ports:
-      - 7000:9117
+      - 7100:9117
 
   sonarr:
     # Monitor tv shows, automatically download, sort and rename episode files
@@ -57,7 +57,7 @@ services:
       - qbittorrent
       - jackett
     ports:
-      - 8000:8989
+      - 7200:8989
 
   radarr:
     # Movie collection manager, automatically download movies, re-download if better quality is found
@@ -78,7 +78,7 @@ services:
       - qbittorrent
       - jackett
     ports:
-      - 9000:7878
+      - 7300:7878
 
 
     
