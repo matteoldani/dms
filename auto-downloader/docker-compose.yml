@@ -87,7 +87,7 @@ services:
 
 
 networks:
-    auto-downloads-network:
+    auto-downloader-network:
         # use the bridge driver, but enable IPv6
         driver: bridge
         
