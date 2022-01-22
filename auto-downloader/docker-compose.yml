@@ -11,7 +11,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - WEBUI_PORT=7171
+      - WEBUI_PORT=7000
     volumes:
       - ${CONFIG_DIR}/qbittorrent:/config
       - ${DOWNLOAD_DIR}:/downloads
@@ -19,7 +19,7 @@ services:
       # out : in 
       - 6881:6881
       - 6881:6881/udp
-      - 7171:7171
+      - 7000:7000
 
   jackett:
     # Torrent tracker manager for Sonarr, Radarr
