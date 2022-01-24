@@ -81,25 +81,6 @@ services:
       - 7300:7878
 
 
-  lidarr:
-    # Music collection manager, automatically download music, re-download if better quality is found
-    # more info at https://hub.docker.com/r/linuxserver/lidarr
-    image: lscr.io/linuxserver/lidarr
-    container_name: lidarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=${TZ}
-    volumes:
-      - ${CONFIG_DIR}/lidarr:/config
-      - ${MEDIA_DIR}/music:/music 
-      - ${DOWNLOAD_DIR}:/downloads
-    depends_on:
-      - qbittorrent
-      - jackett
-    ports:
-      - 7400:8686
-    restart: unless-stopped
     
 
 
